@@ -1,0 +1,19 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='slim' %}
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="https://cccabinet.jpn.org/bootstrap4/css/style.css">
+    <title>{% block title %} | ジムなび！{% endblock %}</title>
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body>
+
+     {% block contents %}
+          {% endblock %}
+</body>
