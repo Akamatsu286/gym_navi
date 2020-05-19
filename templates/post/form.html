@@ -8,3 +8,14 @@
         <input type="submit" value="保存">
     </form>
 {% endblock %}
+
+{% block tinymce %}
+    <script src="js/tinymce/tinymce.min.js"></script>
+    <script>
+     tinymce.init({
+       selector: '#mytextarea',
+       language: 'ja',
+       
+     });
+    </script>
+{% endblock %}

@@ -5,7 +5,7 @@ from django.urls import reverse
 from .models import Post
 
 class postindex(ListView):
-    context_object_name = 'post_list'
+    context_object_name = 'posts'
     template_name = 'post/index.html'
     model = Post
     paginate_by = 10
