@@ -19,11 +19,11 @@ class MyTrainerCreationForm(UserCreationForm):
 
 class MyTrainerAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('name', 'read', 'gender')}),
+        (None, {'fields': ('email', 'password',)}),
+        (_('Personal info'), {'fields': ('gender',)}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
-        #(_('Important dates'), {'fields': ('last_login',)}),
+                                       'groups', 'user_permissions',)}),
+        (_('Important dates'), {'fields': ('last_login',)}),
     )
     add_fieldsets = (
         (None, {
@@ -33,9 +33,9 @@ class MyTrainerAdmin(UserAdmin):
     )
     form = MyTrainerChangeForm
     add_form = MyTrainerCreationForm
-    list_display = ('email', 'name', 'read', 'gender')
-    #list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
-    search_fields = ('email', 'name', 'read', 'gender')
+    list_display = ('email', 'first_name', 'last_name', 'gender')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    search_fields = ('email', 'gender')
     ordering = ('email',)
 
 

@@ -104,7 +104,7 @@ class TrainerCreateComplete(generic.TemplateView):
                     trainer.save()
                     return super().get(request, **kwargs)
 
-        return HttpResponseBadRequest()
+        return redirect('trainer:login')
 
 
 class OnlyYouMixin(UserPassesTestMixin):
@@ -113,6 +113,29 @@ class OnlyYouMixin(UserPassesTestMixin):
     def test_func(self):
         user = self.request.user
         return user.pk == self.kwargs['pk'] or user.is_superuser
+
+
+class OnlyUserMixin(UserPassesTestMixin):
+    raise_exception = True
+
+    def test_func(self):
+        return self.kwargs['pk'] == self.request.user.pk or self.request.user.is_superuser
+
+
+class MyPage(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'trainer/trainer_mypage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class MyPageWithPk(OnlyUserMixin, generic.TemplateView):
+    template_name = 'trainer/trainer_mypage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class TrainerDetail(OnlyYouMixin, generic.DetailView):

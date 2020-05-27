@@ -1,6 +1,5 @@
-{% extends "base.html" %} {% block content %}
 <div class="container">
-  <form action="" method="POST" class="row">
+  <form action="" method="POST" class="row" class="needs-validation" novalidate>
     <table class="tbl-r02">
       {{ form.non_field_errors }}{% csrf_token %}
       <div class="col-sm-8 col-sm-offset-2">
@@ -10,7 +9,7 @@
             <div class="form-row">
               <div class="col">
                 <label for="{{ form.first_name.id_for_label }}">姓</label>
-                {{ form.first_name }}{{ form.first_name.errors }}
+                {{ form.first_name|add_class }}{{ form.first_name.errors }}
               </div>
               <div class="col">
                 <label for="{{ form.last_name.id_for_label }}">名</label>
@@ -89,27 +88,58 @@
       </tr>
       <tr>
         <td colspan="2" align="center">
-          <div class="custom-control custom-checkbox">
-            <label>
+          <div class="form-group pb-3">
+            <div class="custom-control custom-checkbox">
               <input
+                class="custom-control-input"
                 type="checkbox"
-                class="checkbox-input"
-                value="1"
-                name="rule"
-                id="rule"
+                value=""
+                id="invalidCheck"
                 required
               />
-              <span class="checkbox-parts sys_input_rule"
-                >※<a target="_blank" href="#">利用規約</a>に同意する</span
-              >
-            </label>
+              <label class="custom-control-label" for="invalidCheck">
+                <a href="#">利用規約</a>に同意する
+              </label>
+              <div class="invalid-feedback mb-3">
+                提出する前に同意する必要があります
+              </div>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary btn-lg">
-            登録する
+            送信
           </button>
         </td>
       </tr>
     </table>
   </form>
 </div>
-{% endblock %}
+<script>
+  // 無効なフィールドがある場合にフォーム送信を無効にするスターターJavaScriptの例
+  (function () {
+    "use strict";
+
+    window.addEventListener(
+      "load",
+      function () {
+        // カスタムブートストラップ検証スタイルを適用するすべてのフォームを取得
+        var forms = document.getElementsByClassName("needs-validation");
+        // ループして帰順を防ぐ
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          // submitボタンを押したら以下を実行
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      },
+      false
+    );
+  })();
+</script>

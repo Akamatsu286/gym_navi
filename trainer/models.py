@@ -5,6 +5,11 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
+GENDER_CHOICES = [
+    ('1', '女性'),
+    ('2', '男性'),
+]
+
 
 class CustomUserManager(UserManager):
 
@@ -35,17 +40,19 @@ class CustomUserManager(UserManager):
 
 
 class Trainer(AbstractBaseUser, PermissionsMixin):
-    GENDER_CHOICES = (
-        (1, '男性'),
-        (2, '女性'),
-    )
 
-    name = models.CharField(max_length=100, verbose_name='名前')
-    read = models.CharField(max_length=100, verbose_name='フリガナ')
+    first_name = models.CharField(max_length=100, verbose_name='姓')
+    last_name = models.CharField(max_length=100, verbose_name='名')
+    first_read = models.CharField(max_length=100, verbose_name='セイ')
+    last_read = models.CharField(max_length=100, verbose_name='メイ')
     gender = models.CharField(max_length=100,
                               verbose_name='性別', choices=GENDER_CHOICES, blank=True, null=True)
     email = models.EmailField(
         max_length=254, verbose_name='メールアドレス', unique=True)
+    phone = models.CharField(max_length=15, verbose_name='電話番号')
+    birth_date = models.DateField(null=True, blank=True, verbose_name='生年月日')
+    image = models.ImageField(upload_to='images', verbose_name='画像')
+    area = models.CharField(max_length=100)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -59,9 +66,8 @@ class Trainer(AbstractBaseUser, PermissionsMixin):
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'),
     )
-    # image = models.ImageField(upload_to='images', verbose_name='画像')
-    # area = models.CharField(max_length=100)
-    # date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+
+    #date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     objects = CustomUserManager()
 
     EMAIL_FIELD = 'email'
@@ -72,8 +78,6 @@ class Trainer(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
-
-"""
     def get_full_name(self):
         full_name = '%s %s' % (self.first_name, self.last_name)
         return full_name.strip()
@@ -82,7 +86,7 @@ class Trainer(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
-        send_mail(subject, message, from_email, [self.email], **kwargs)"""
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
 @property

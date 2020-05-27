@@ -4,8 +4,11 @@ from django.contrib.auth.forms import (
     PasswordResetForm, SetPasswordForm
 )
 from django.contrib.auth import get_user_model
+from .models import GENDER_CHOICES
 
 Trainer = get_user_model()
+
+GENDER_CHOICES = GENDER_CHOICES + [('', '---------')]
 
 
 class LoginForm(AuthenticationForm):
@@ -19,10 +22,15 @@ class LoginForm(AuthenticationForm):
 
 class TrainerCreateForm(UserCreationForm):
     """ユーザー登録用フォーム"""
-
     class Meta:
         model = Trainer
-        fields = ('email',)
+        fields = ('first_name', 'last_name', 'first_read',
+                  'last_read', 'gender', 'birth_date', 'phone', 'email',)
+        widgets = {
+            'birth_date': forms.SelectDateWidget(years=[x for x in range(1950, 2020)])
+        }
+        gender = forms.ChoiceField(
+            label='性別', choices=GENDER_CHOICES, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,7 +48,7 @@ class TrainerUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Trainer
-        fields = ('name', 'read',)
+        fields = ('first_name', 'last_name',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

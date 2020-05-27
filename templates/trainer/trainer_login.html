@@ -1,38 +1,16 @@
 {% extends "base.html" %} {% block content %}
-<div class="row">
-  <!-- 左側、ログインエリア -->
-  <div class="card col-md-6">
-    <div class="card-body">
-      <form action="{% url 'trainer:login' %}" method="POST">
-        {{ form.non_field_errors }} {% for field in form %} {{ field }} {{
-        field.errors }}
-        <hr />
-        {% endfor %}
-        <button type="submit" class="btn btn-success btn-lg btn-block">
-          ログイン
-        </button>
-        <input type="hidden" name="next" value="{{ next }}" />
-        {% csrf_token %}
-      </form>
-    </div>
-  </div>
-  <!-- 左側、ログインエリアおわり -->
-
-  <!-- 右側、会員登録エリア -->
-  <div class="card col-md-6">
-    <div class="card-body">
-      <a
-        href="{% url 'trainer:trainer_create' %}"
-        class="btn btn-success btn-lg btn-block"
-        >会員登録</a
-      >
-      <a
-        href="{% url 'trainer:password_reset' %}"
-        class="btn btn-success btn-lg btn-block"
-        >パスワードを忘れた方</a
-      >
-    </div>
-  </div>
-  <!-- 右側、会員登録エリアおわり -->
+<div class="form-box">
+  <form action="{% url 'trainer:login' %}" method="POST" style="margin: auto;">
+    {% csrf_token %}{{ form.non_field_errors }}
+    <h1 class="h3 mb-3 font-weight-normal">ログイン</h1>
+    {% for field in form %} {{ field }}{{ field.errors }}
+    <hr />
+    {% endfor %}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      ログイン
+    </button>
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+  <a href="{% url 'trainer:password_reset' %}">※パスワードを忘れた場合</a>
 </div>
 {% endblock %}

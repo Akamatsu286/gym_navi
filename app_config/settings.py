@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'trainer.apps.TrainerConfig',
     'bootstrap4',
     'tinymce',
+    'widget_tweaks',
 ]
 
 
@@ -40,7 +41,7 @@ ROOT_URLCONF = 'app_config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates', )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -110,4 +111,9 @@ AUTH_USER_MODEL = 'trainer.Trainer'
 LOGIN_URL = 'trainer:login'
 LOGIN_REDIRECT_URL = 'trainer:top'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'afiafi88afiafi@gmail.com'
+EMAIL_HOST_PASSWORD = '9300makomako'

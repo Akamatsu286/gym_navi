@@ -1,11 +1,13 @@
+{% load bootstrap4 %} {% bootstrap_css %} {% load static %} {% load widget_tweaks %}
 <!DOCTYPE html>
 <html>
-  {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript
-  jquery='slim' %} {% load static %}
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta name="description" content="ページの内容を表す文章" />
     <link rel="canonical" href="正規化するURL" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}" />
@@ -13,68 +15,94 @@
       rel="stylesheet"
       href="https://cccabinet.jpn.org/bootstrap4/css/style.css"
     />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="{% static 'js/app.js' %}"></script>
+
     <title>{% block title %} | TRANERS {% endblock %}</title>
     {% block extra_css %}{% endblock %} {% block tinymce %}{% endblock %}
   </head>
 
   <body>
-    <!-- ナビバー -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'trainer:login' %}"
-        >ホームページ名</a
-      >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- ヘッダー -->
+    <header>
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'trainer:top' %}">TRAINERS</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbar"
+          aria-controls="navbar"
+          aria-expanded="false"
+          aria-label="ナビゲーションの切替"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          {% if user.is_authenticated %}
-          <li>
-            <a
-              class="nav-item nav-link"
-              href="{% url 'trainer:trainer_detail' user.pk %}"
-              >ユーザー情報閲覧</a
-            >
-          </li>
-          <li>
-            <a
-              class="nav-item nav-link"
-              href="{% url 'trainer:trainer_update' user.pk %}"
-              >ユーザー情報更新</a
-            >
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="{% url 'trainer:logout' %}"
-              >ログアウト</a
-            >
-          </li>
-          <li>
-            <a
-              class="nav-item nav-link"
-              href="{% url 'trainer:password_change' %}"
-              >パスワードの変更</a
-            >
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="{% url 'trainer:login' %}">
-              ようこそ、ゲスト！ログインはこちら
-            </a>
-          </li>
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse justify-content-start">
+            <li class="nav-item">
+              <a class="nav-link" href="#">ご利用の流れ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">リンク</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">リンク</a>
+            </li>
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a
+                class="nav-item nav-link"
+                href="{% url 'trainer:trainer_detail' user.pk %}"
+                >ユーザー情報閲覧</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-item nav-link"
+                href="{% url 'trainer:trainer_update' user.pk %}"
+                >ユーザー情報更新</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-item nav-link" href="{% url 'trainer:logout' %}"
+                >ログアウト</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-item nav-link"
+                href="{% url 'trainer:password_change' %}"
+                >パスワードの変更</a
+              >
+            </li>
+            {% else %}
+            <button type="button" class="btn btn-light ">
+              <li class="nav-item">
+                <a class="nav-item nav-link" href="{% url 'trainer:login' %}">ログイン</a>
+              </li>
+            </button>
+            <button type="button" class="btn btn-success btn-sm" style="margin: 10px;">
+              <li class="nav-item">
+                <a class="nav-item nav-linkbtn btn-success btn-sm" href="{% url 'trainer:trainer_create' %}"> トレーナー登録</a>
+              </li>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" style="margin: 10px;">
+              <li class="nav-item">
+                <a class="nav-item nav-linkbtn btn-primary btn-sm" href="{% url 'trainer:trainer_create' %}">ユーザー登録</a>
+              </li>
+            </button>
+          </ul>
           {% endif %}
-        </ul>
-      </div>
-    </nav>
-
+        </div>
+      </nav>
+    </header>
     <!-- メインコンテント -->
     <div class="container mt-3">
       {% block content %}{% endblock %}

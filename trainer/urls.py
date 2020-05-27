@@ -4,6 +4,7 @@ from. import views
 app_name = 'trainer'
 
 urlpatterns = [
+    path('', views.Top.as_view(), name='top'),
     path('login/', views.Trainer_login.as_view(), name='login'),
     path('logout/', views.Trainer_logout.as_view(), name='logout'),
     path('trainer_create/', views.TrainerCreate.as_view(), name='trainer_create'),
@@ -15,6 +16,7 @@ urlpatterns = [
          views.TrainerDetail.as_view(), name='trainer_detail'),
     path('trainer_update/<int:pk>/',
          views.TrainerUpdate.as_view(), name='trainer_update'),
+
     path('password_change/', views.PasswordChange.as_view(), name='password_change'),
     path('password_change/done/', views.PasswordChangeDone.as_view(),
          name='password_change_done'),
@@ -25,9 +27,11 @@ urlpatterns = [
          views.PasswordResetConfirm.as_view(), name='password_reset_confirm'),
     path('password_reset/complete/', views.PasswordResetComplete.as_view(),
          name='password_reset_complete'),
+
     path('email/change/', views.EmailChange.as_view(), name='email_change'),
     path('email/change/done/', views.EmailChangeDone.as_view(),
          name='email_change_done'),
     path('email/change/complete/<str:token>/',
          views.EmailChangeComplete.as_view(), name='email_change_complete'),
+    path('mypage/<int:pk>/', views.MyPageWithPk.as_view(), name='my_page_with_pk'),
 ]
